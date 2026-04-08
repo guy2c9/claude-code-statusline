@@ -36,3 +36,33 @@ remaining: 5h: 97% | 7d: 85% | ctx: 88%
 |------|---------|
 | `~/.claude/statusline-command.sh` | Status line script |
 | `~/.claude/settings.json` | Claude Code settings with statusLine config |
+
+## Session 2 — 2026-04-08
+
+### Goal
+
+Switch from showing remaining percentages to showing used percentages, matching the native `/usage` command's presentation.
+
+### What was done
+
+1. **Flipped percentages** — now shows used % directly instead of calculating remaining (100 - used)
+
+2. **Flipped colour thresholds** to match:
+   - Green for < 30% used
+   - Yellow for 30–59% used
+   - Red for 60%+ used
+
+3. **Changed prefix** from `remaining:` to `used:`
+
+4. **Updated all three copies:**
+   - `~/.claude/statusline-command.sh` (active)
+   - `~/claude-code/statusline-command.sh` — different script (git info + context only), left unchanged
+   - `scripts/statusline-command.sh` (this repo)
+
+5. **Reviewed accuracy against native `/usage`** — confirmed the script reads the same data source (status line JSON from stdin). The 7d figure matched exactly; 5h had ±1% rounding difference.
+
+### Current output format
+
+```
+used: 5h: 62% | 7d: 44% | ctx: 2%
+```
