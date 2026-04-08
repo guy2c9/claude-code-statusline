@@ -92,3 +92,25 @@ Add project name, git branch, and MCP indicator to the status line matching a ne
 ```
 agent-runtime | main | mcp | 82% left | 5h: 29% | 7d: 6%
 ```
+
+## Session 4 — 2026-04-08
+
+### Goal
+
+Add Codex CLI statusline configuration equivalent.
+
+### What was done
+
+1. **Researched Codex CLI** — statusline is built-in with 17 predefined items, no external script support
+
+2. **Configured `~/.codex/config.toml`** with `tui.status_line` using closest matching items:
+   - `current-dir`, `git-branch`, `context-remaining`, `five-hour-limit`, `weekly-limit`
+
+3. **Updated README** with Codex setup instructions and available items reference
+
+### Limitations
+
+- No external script piping (built-in items only)
+- No MCP connection indicator available
+- No custom colours or thresholds
+- Items separated by centre dot, not configurable

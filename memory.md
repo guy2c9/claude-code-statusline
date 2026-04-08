@@ -33,3 +33,10 @@ Custom Claude Code status line showing project context, MCP status, and usage me
 - Rate limits show used ("5h: 29%") — matches native `/usage` presentation
 - MCP indicator checks settings files since MCP status is not exposed in the statusLine JSON
 - Segments hidden when data unavailable rather than showing "N/A"
+
+## Codex CLI
+
+- Codex uses a built-in statusline with predefined items — no external script support
+- Config: `tui.status_line` array in `~/.codex/config.toml` (TOML, not JSON)
+- 17 available items including `current-dir`, `git-branch`, `context-remaining`, `five-hour-limit`, `weekly-limit`
+- No MCP indicator, no custom colours, segments separated by ` · `
