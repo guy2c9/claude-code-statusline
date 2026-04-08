@@ -49,15 +49,25 @@ if [ -n "$cwd" ] && git -C "$cwd" rev-parse --git-dir >/dev/null 2>&1; then
   fi
 fi
 
-# --- MCP indicator (green if any servers configured) ---
+# --- MCP indicator (purple if any servers available) ---
 mcp_found=0
+# Check mcpServers in settings files
 for f in "$HOME/.claude/settings.json" "$HOME/.claude/settings.local.json"; do
   [ -f "$f" ] && jq -e '.mcpServers | length > 0' "$f" >/dev/null 2>&1 && mcp_found=1 && break
 done
+# Check project-level settings
 if [ "$mcp_found" -eq 0 ] && [ -n "$cwd" ]; then
   for f in "$cwd/.claude/settings.json" "$cwd/.claude/settings.local.json"; do
     [ -f "$f" ] && jq -e '.mcpServers | length > 0' "$f" >/dev/null 2>&1 && mcp_found=1 && break
   done
+fi
+# Check Claude.ai integrations (auth cache has entries when platform MCP servers are active)
+if [ "$mcp_found" -eq 0 ] && [ -f "$HOME/.claude/mcp-needs-auth-cache.json" ]; then
+  jq -e 'length > 0' "$HOME/.claude/mcp-needs-auth-cache.json" >/dev/null 2>&1 && mcp_found=1
+fi
+# Check installed plugins with MCP servers
+if [ "$mcp_found" -eq 0 ]; then
+  [ -n "$(find "$HOME/.claude/plugins/marketplaces" -name ".mcp.json" -maxdepth 5 2>/dev/null | head -1)" ] && mcp_found=1
 fi
 if [ "$mcp_found" -eq 1 ]; then
   sep; printf '\033[38;5;141mmcp\033[0m'; parts="1"
