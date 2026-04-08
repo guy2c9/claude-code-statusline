@@ -37,7 +37,7 @@ parts=""
 # --- Project name (cyan) ---
 if [ -n "$cwd" ]; then
   repo_name=$(basename "$cwd")
-  printf '\033[96m%s\033[0m' "$repo_name"
+  printf '\033[38;5;81m%s\033[0m' "$repo_name"
   parts="1"
 fi
 
@@ -60,7 +60,7 @@ if [ "$mcp_found" -eq 0 ] && [ -n "$cwd" ]; then
   done
 fi
 if [ "$mcp_found" -eq 1 ]; then
-  sep; printf '\033[32mmcp\033[0m'; parts="1"
+  sep; printf '\033[38;5;141mmcp\033[0m'; parts="1"
 fi
 
 # --- Context remaining ---

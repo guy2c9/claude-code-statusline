@@ -31,9 +31,9 @@ Custom Claude Code status line showing 6 segments: project name, git branch, MCP
 
 | Segment | Colour | Source |
 |---------|--------|--------|
-| Project name | Cyan (96) | `workspace.current_dir` basename |
+| Project name | Cyan (38;5;81) | `workspace.current_dir` basename |
 | Git branch | Coral (38;5;215) | `git rev-parse --abbrev-ref HEAD` |
-| MCP indicator | Green (32) | `mcpServers` in settings files |
+| MCP indicator | Purple (38;5;141) | `mcpServers` in settings files |
 | Context remaining | Green >50%, Yellow 20–50%, Red <20% | `context_window.remaining_percentage` |
 | 5h rate used | Green <30%, Yellow 30–59%, Red 60%+ | `rate_limits.five_hour.used_percentage` |
 | 7d rate used | Green <30%, Yellow 30–59%, Red 60%+ | `rate_limits.seven_day.used_percentage` |
@@ -46,3 +46,4 @@ Custom Claude Code status line showing 6 segments: project name, git branch, MCP
 - Two colour helpers: `color_used` (low=good) for rate limits, `color_rem` (high=good) for context
 - `--no-optional-locks` flag on git to avoid interfering with other git operations
 - Segments hidden when data unavailable rather than showing "N/A"
+- Use 256-colour mode (38;5;N) not high-intensity ANSI (90–97) — Claude Code status line doesn't render the latter

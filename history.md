@@ -95,3 +95,15 @@ Install latest statusline script on a second machine from GitHub repo.
 1. **Updated `~/.claude/statusline-command.sh`** — replaced old Session 1 script with latest Session 3 version (6 segments)
 2. **Settings already configured** — `statusLine` block in `~/.claude/settings.json` was already present
 3. **Updated repo files** — synced history.md, memory.md, and README.md to reflect current state
+
+## Session 5 — 2026-04-08
+
+### Goal
+
+Fix colour rendering in Claude Code status line.
+
+### What was done
+
+1. **Fixed project name colour** — changed from `\033[96m` (bright cyan, rendered as grey) to `\033[38;5;81m` (256-colour cyan, renders correctly)
+2. **Changed MCP indicator colour** — from `\033[32m` (green) to `\033[38;5;141m` (purple) per user preference
+3. **Lesson learned** — Claude Code status line doesn't support high-intensity ANSI codes (90–97); use 256-colour mode (38;5;N) instead
