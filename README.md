@@ -31,7 +31,17 @@ remaining: 5h: 97% | 7d: 85% | ctx: 88%
 - `jq` (usually pre-installed on macOS, or `brew install jq`)
 - Claude.ai Pro or Max subscription (for rate limit metrics)
 
-## Setup
+## Quick install with Claude Code
+
+Paste this prompt into Claude Code and it will do the rest:
+
+```
+Clone https://github.com/guy2c9/claude-code-statusline and follow the README to set it up. Copy the script to ~/.claude/statusline-command.sh, make it executable, and add the statusLine config to ~/.claude/settings.json. Do not overwrite any existing settings — merge the statusLine block in.
+```
+
+Then restart Claude Code.
+
+## Manual setup
 
 ### 1. Copy the script
 
