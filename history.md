@@ -107,3 +107,23 @@ Fix colour rendering in Claude Code status line.
 1. **Fixed project name colour** — changed from `\033[96m` (bright cyan, rendered as grey) to `\033[38;5;81m` (256-colour cyan, renders correctly)
 2. **Changed MCP indicator colour** — from `\033[32m` (green) to `\033[38;5;141m` (purple) per user preference
 3. **Lesson learned** — Claude Code status line doesn't support high-intensity ANSI codes (90–97); use 256-colour mode (38;5;N) instead
+
+## Session 6 — 2026-04-08
+
+### Goal
+
+Add Codex CLI statusline configuration equivalent.
+
+### What was done
+
+1. **Researched Codex CLI** — statusline is built-in with 17 predefined items, no external script support
+2. **Configured `~/.codex/config.toml`** with `tui.status_line` using closest matching items:
+   - `current-dir`, `git-branch`, `context-remaining`, `five-hour-limit`, `weekly-limit`
+3. **Updated README** with Codex setup instructions and available items reference
+
+### Limitations
+
+- No external script piping (built-in items only)
+- No MCP connection indicator available
+- No custom colours or thresholds
+- Items separated by centre dot, not configurable

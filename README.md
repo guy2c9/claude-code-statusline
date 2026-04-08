@@ -80,6 +80,43 @@ Claude Code pipes a JSON object containing session metrics to the status line co
 3. Applies ANSI colour codes based on thresholds
 4. Outputs pipe-separated formatted segments
 
+## Codex CLI
+
+Codex CLI uses a built-in status line with predefined items (no external scripts). Add this to `~/.codex/config.toml`:
+
+```toml
+[tui]
+status_line = ["current-dir", "git-branch", "context-remaining", "five-hour-limit", "weekly-limit"]
+```
+
+This gives you the closest equivalent:
+
+```
+my-project · main · 82% left · 5h: 71% · weekly: 94%
+```
+
+### Available Codex items
+
+| Item | Description |
+|------|-------------|
+| `current-dir` | Current working directory |
+| `project-root` | Project root directory |
+| `git-branch` | Current git branch |
+| `context-remaining` | Context window % remaining |
+| `context-used` | Context window % used |
+| `five-hour-limit` | 5-hour rate limit remaining |
+| `weekly-limit` | Weekly rate limit remaining |
+| `model-with-reasoning` | Model name with reasoning level |
+| `used-tokens` | Total tokens used in session |
+| `codex-version` | Codex version |
+
+### Limitations vs Claude Code
+
+- No external script support — items are built-in only
+- No custom colours or thresholds
+- No MCP connection indicator
+- Segments separated by ` · ` (centre dot), not configurable
+
 ## Licence
 
 MIT

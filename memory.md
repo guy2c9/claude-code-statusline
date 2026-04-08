@@ -47,3 +47,10 @@ Custom Claude Code status line showing 6 segments: project name, git branch, MCP
 - `--no-optional-locks` flag on git to avoid interfering with other git operations
 - Segments hidden when data unavailable rather than showing "N/A"
 - Use 256-colour mode (38;5;N) not high-intensity ANSI (90–97) — Claude Code status line doesn't render the latter
+
+## Codex CLI
+
+- Codex uses a built-in statusline with predefined items — no external script support
+- Config: `tui.status_line` array in `~/.codex/config.toml` (TOML, not JSON)
+- 17 available items including `current-dir`, `git-branch`, `context-remaining`, `five-hour-limit`, `weekly-limit`
+- No MCP indicator, no custom colours, segments separated by ` · `
