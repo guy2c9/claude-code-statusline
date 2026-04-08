@@ -69,9 +69,13 @@ fi
 if [ "$mcp_found" -eq 0 ]; then
   [ -n "$(find "$HOME/.claude/plugins/marketplaces" -name ".mcp.json" -maxdepth 5 2>/dev/null | head -1)" ] && mcp_found=1
 fi
+sep
 if [ "$mcp_found" -eq 1 ]; then
-  sep; printf '\033[38;5;141mmcp\033[0m'; parts="1"
+  printf '\033[38;5;141mmcp\033[0m'
+else
+  printf '\033[31mmcp\033[0m'
 fi
+parts="1"
 
 # --- Context remaining ---
 if [ -n "$ctx_rem" ]; then
