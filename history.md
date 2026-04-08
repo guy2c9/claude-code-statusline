@@ -46,20 +46,9 @@ Switch from showing remaining percentages to showing used percentages, matching 
 ### What was done
 
 1. **Flipped percentages** — now shows used % directly instead of calculating remaining (100 - used)
-
-2. **Flipped colour thresholds** to match:
-   - Green for < 30% used
-   - Yellow for 30–59% used
-   - Red for 60%+ used
-
+2. **Flipped colour thresholds** — green <30% used, yellow 30–59%, red 60%+
 3. **Changed prefix** from `remaining:` to `used:`
-
-4. **Updated all three copies:**
-   - `~/.claude/statusline-command.sh` (active)
-   - `~/claude-code/statusline-command.sh` — different script (git info + context only), left unchanged
-   - `scripts/statusline-command.sh` (this repo)
-
-5. **Reviewed accuracy against native `/usage`** — confirmed the script reads the same data source (status line JSON from stdin). The 7d figure matched exactly; 5h had ±1% rounding difference.
+4. **Reviewed accuracy against native `/usage`** — confirmed the script reads the same data source
 
 ### Current output format
 
@@ -71,24 +60,38 @@ used: 5h: 62% | 7d: 44% | ctx: 2%
 
 ### Goal
 
-Add project name, git branch, and MCP indicator to the status line matching a new combined design.
+Add project name, git branch, and MCP indicator to the status line for richer context.
 
 ### What was done
 
 1. **Added project name** (cyan) — extracted from `workspace.current_dir` in the JSON input
-
 2. **Added git branch** (coral) — detected via `git rev-parse` using the workspace directory
-
 3. **Added MCP indicator** (green) — checks for `mcpServers` in global and project-level settings files
-
-4. **Changed context to show remaining** — `82% left` using `context_window.remaining_percentage` (more intuitive for context)
-
-5. **Kept rate limits as used** — `5h: 29% | 7d: 6%` (matches native `/usage`)
-
-6. **Updated all copies and documentation**
+4. **Changed context to show remaining** — `82% left` (more intuitive for context)
+5. **Kept rate limits as used** — matches native `/usage`
+6. **Two colour helper functions** — `color_used` for rate limits, `color_rem` for context remaining
 
 ### Current output format
 
 ```
 agent-runtime | main | mcp | 82% left | 5h: 29% | 7d: 6%
 ```
+
+### Colour thresholds
+
+| Segment | Green | Yellow | Red |
+|---------|-------|--------|-----|
+| Context remaining | >50% | 20–50% | <20% |
+| Rate limit used | <30% | 30–59% | 60%+ |
+
+## Session 4 — 2026-04-08
+
+### Goal
+
+Install latest statusline script on a second machine from GitHub repo.
+
+### What was done
+
+1. **Updated `~/.claude/statusline-command.sh`** — replaced old Session 1 script with latest Session 3 version (6 segments)
+2. **Settings already configured** — `statusLine` block in `~/.claude/settings.json` was already present
+3. **Updated repo files** — synced history.md, memory.md, and README.md to reflect current state
