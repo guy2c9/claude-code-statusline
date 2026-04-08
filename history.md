@@ -127,3 +127,15 @@ Add Codex CLI statusline configuration equivalent.
 - No MCP connection indicator available
 - No custom colours or thresholds
 - Items separated by centre dot, not configurable
+
+## Session 7 — 2026-04-08
+
+### Goal
+
+Show MCP indicator always — purple when connected, red when not.
+
+### What was done
+
+1. **MCP indicator now always visible** — previously hidden when no MCP detected
+2. **Purple** (`38;5;141`) when any MCP source found (settings, auth cache, or plugins)
+3. **Red** (`31`) when no MCP servers detected

@@ -33,7 +33,7 @@ Custom Claude Code status line showing 6 segments: project name, git branch, MCP
 |---------|--------|--------|
 | Project name | Cyan (38;5;81) | `workspace.current_dir` basename |
 | Git branch | Coral (38;5;215) | `git rev-parse --abbrev-ref HEAD` |
-| MCP indicator | Purple (38;5;141) | `mcpServers` in settings files |
+| MCP indicator | Purple (38;5;141) connected, Red (31) disconnected | Settings, auth cache, or plugins |
 | Context remaining | Green >50%, Yellow 20–50%, Red <20% | `context_window.remaining_percentage` |
 | 5h rate used | Green <30%, Yellow 30–59%, Red 60%+ | `rate_limits.five_hour.used_percentage` |
 | 7d rate used | Green <30%, Yellow 30–59%, Red 60%+ | `rate_limits.seven_day.used_percentage` |
