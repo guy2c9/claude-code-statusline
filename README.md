@@ -1,28 +1,29 @@
 # Claude Code Statusline
 
-Custom status line for Claude Code showing used token and rate limit percentages with colour-coded indicators.
+Custom status line for Claude Code showing project context, MCP status, and usage metrics with colour-coded indicators.
 
 ## What you get
 
 A status line at the bottom of Claude Code showing:
 
 ```
-used: 5h: 62% | 7d: 44% | ctx: 2%
+agent-runtime | main | mcp | 82% left | 5h: 29% | 7d: 6%
 ```
 
-| Metric | Description |
-|--------|-------------|
+| Segment | Description |
+|---------|-------------|
+| Project name | Current directory name (cyan) |
+| Branch | Git branch name (coral) |
+| mcp | MCP servers connected indicator (green) |
+| % left | Context window remaining |
 | 5h | 5-hour rolling rate limit used |
 | 7d | 7-day rolling rate limit used |
-| ctx | Context window used in current session |
 
 ### Colour coding
 
-| Used | Colour |
-|------|--------|
-| < 30% | Green |
-| 30–59% | Yellow |
-| 60%+ | Red |
+**Context remaining** — green > 50%, yellow 20–50%, red < 20%
+
+**Rate limits (used)** — green < 30%, yellow 30–59%, red 60%+
 
 ## Requirements
 
@@ -69,26 +70,29 @@ The status line will appear after your first API response in the session.
 
 ## Notes
 
+- The project name and git branch appear immediately
+- The `mcp` indicator shows when MCP servers are configured in settings (global or project-level)
 - The `5h` and `7d` rate limit values only appear after the first API response and require a Pro/Max subscription
-- The `ctx` context window value appears once the session has at least one message
+- Context window value appears once the session has at least one message
 - Segments are hidden until their data becomes available — no "N/A" clutter
 
 ## Customisation
 
 Edit `~/.claude/statusline-command.sh` to change:
 
-- **Colour thresholds** — adjust the `30` and `60` values in the `colorize` function
-- **Labels** — change `5h`, `7d`, `ctx` to whatever you prefer
-- **Prefix** — change `used:` to any label
+- **Colour thresholds** — adjust values in the `color_used` and `color_rem` functions
+- **Labels** — change `5h`, `7d`, `left` to whatever you prefer
+- **Segments** — remove any section you don't need
 
 ## How it works
 
 Claude Code pipes a JSON object containing session metrics to the status line command via stdin. The script:
 
-1. Extracts `rate_limits.five_hour.used_percentage`, `rate_limits.seven_day.used_percentage`, and `context_window.used_percentage` using `jq`
-2. Rounds the used percentage to the nearest integer
-3. Applies ANSI colour codes based on thresholds
-4. Outputs the formatted string
+1. Extracts project directory, context window, and rate limit data using `jq`
+2. Detects git repo and branch via `git` commands
+3. Checks for MCP server configuration in settings files
+4. Applies ANSI colour codes based on thresholds
+5. Outputs the formatted string with pipe-separated segments
 
 ## Licence
 

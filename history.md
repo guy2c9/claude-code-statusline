@@ -66,3 +66,29 @@ Switch from showing remaining percentages to showing used percentages, matching 
 ```
 used: 5h: 62% | 7d: 44% | ctx: 2%
 ```
+
+## Session 3 — 2026-04-08
+
+### Goal
+
+Add project name, git branch, and MCP indicator to the status line matching a new combined design.
+
+### What was done
+
+1. **Added project name** (cyan) — extracted from `workspace.current_dir` in the JSON input
+
+2. **Added git branch** (coral) — detected via `git rev-parse` using the workspace directory
+
+3. **Added MCP indicator** (green) — checks for `mcpServers` in global and project-level settings files
+
+4. **Changed context to show remaining** — `82% left` using `context_window.remaining_percentage` (more intuitive for context)
+
+5. **Kept rate limits as used** — `5h: 29% | 7d: 6%` (matches native `/usage`)
+
+6. **Updated all copies and documentation**
+
+### Current output format
+
+```
+agent-runtime | main | mcp | 82% left | 5h: 29% | 7d: 6%
+```

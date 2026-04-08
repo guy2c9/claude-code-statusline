@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Custom Claude Code status line showing used token and rate limit percentages with ANSI colour-coded indicators (green/yellow/red based on thresholds).
+Custom Claude Code status line showing project context, MCP status, and usage metrics with ANSI colour-coded indicators.
 
 ## Key Files
 
@@ -15,18 +15,21 @@ Custom Claude Code status line showing used token and rate limit percentages wit
 
 | Dependency | Purpose |
 |------------|---------|
-| `jq` | JSON parsing of session metrics |
+| `jq` | JSON parsing of session metrics and settings files |
+| `git` | Branch detection |
 
 ## Architecture
 
 - Claude Code pipes session metrics JSON to the script via stdin
-- Script extracts three fields: `rate_limits.five_hour.used_percentage`, `rate_limits.seven_day.used_percentage`, `context_window.used_percentage`
-- Rounds used percentage and applies ANSI colour codes
-- Segments are only shown when their data is available (rate limits appear after first API response)
+- Script extracts workspace directory, context window remaining, and rate limit used percentages
+- Git branch detected via `git rev-parse` using workspace directory
+- MCP status detected by checking `mcpServers` in global and project-level settings files (not in JSON input)
+- Segments are only shown when their data is available
 
 ## Design Decisions
 
-- Used a standalone shell script rather than inline jq in settings.json for readability and maintainability
-- Colour thresholds: green < 30% used, yellow 30–59% used, red >= 60% used
+- Combined project context (name, branch, MCP) with usage metrics in a single line
+- Context shows remaining ("82% left") — more intuitive for "how much space do I have"
+- Rate limits show used ("5h: 29%") — matches native `/usage` presentation
+- MCP indicator checks settings files since MCP status is not exposed in the statusLine JSON
 - Segments hidden when data unavailable rather than showing "N/A"
-- Prefix "used:" to match native `/usage` presentation
